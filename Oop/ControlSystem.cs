@@ -5,29 +5,25 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Oop
 {
-    public class ControlSystem
+    public class 
+       ControlSystem : BaseControlSystem
     {
         public string Name { get; set; }
-        public double Balance { get; private set; }
         public double RemainingWater { get; set; }
         public double LeftoverCoffee { get; set; }
         public double RemainingMilk { get; set; }
         public double SugarResidue { get; set; }
-        public double SalesAmount { get; private set; }
         private List<CoffeeReciept> _сoffeeReciept;
-     
 
-        
 
-        public ControlSystem(List<CoffeeReciept> coffeeReciepts)
+
+
+        public ControlSystem(List<CoffeeReciept> coffeeReciepts, string machineName) : base(machineName)
         {
-            
-            Balance = 0;
             RemainingWater = CoffeeOptions.MaxWaterAmount;
             LeftoverCoffee = CoffeeOptions.MaxCoffeeAmount;
             RemainingMilk = CoffeeOptions.MaxMilkAmount;
             SugarResidue = CoffeeOptions.MaxSugarAmount;
-            SalesAmount = 0;
             _сoffeeReciept = coffeeReciepts;
             Refiel();
         }
@@ -53,7 +49,7 @@ namespace Oop
                 SugarResidue = 100;
             }
         }
-        public void CoffeePrint()
+        public override void   DrinkPrint()
         {
             double count = 1;
             Console.WriteLine("Список кофе");
@@ -63,7 +59,7 @@ namespace Oop
                 count++;
             }
         }
-        public void AcceptingCoins()
+        public override void AcceptingCoins()
         {
 
             Console.WriteLine("Введите сумму которую хотите положить в автомат");
@@ -96,7 +92,7 @@ namespace Oop
                 }
             }
         }
-        public void ReportingProblems()
+        public override void ReportingProblems()
         {
             string problem = "кончились деньги";
             string problem1= "кончился кофе";
@@ -128,7 +124,27 @@ namespace Oop
             Console.WriteLine(SugarResidue);
             Console.WriteLine(SalesAmount);
         }
-       
+        public override void TheMachineDies(int f)
+        {
+            if (Balance == 0)
+            {
+                f = 0;
+                
+            }
+            else
+            {
+                f = 1;
+            }
+            if (f == 0)
+            {
+                RepairMachine();
+            }
+        }
+        public override void RepairMachine()
+        {
+            Console.WriteLine($"автомат{MachineName} починился");
+        }
+
 
 
 
